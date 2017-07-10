@@ -1,0 +1,7 @@
+[package]
+name = "bp"
+version = "0.1.0"
+authors = ["Jackal <ywzjackal@163.com>"]
+
+[dependencies]
+serde_json = "0.9"
