@@ -5,7 +5,7 @@
             "type": "lldb",
             "request": "launch",
             "name": "Launch",
-            "program": "${workspaceRoot}/target/debug/xor-581620408e13d9d3",
+            "program": "${workspaceRoot}/target/debug/xor-108cd056c870045c",
             "args": [],
             "cwd": "${workspaceRoot}"
         },
@@ -13,7 +13,7 @@
             "type": "lldb",
             "request": "launch",
             "name": "Debug",
-            "program": "${workspaceRoot}/target/debug/xor-581620408e13d9d3",
+            "program": "${workspaceRoot}/target/debug/xor-108cd056c870045c",
             "args": [],
             "cwd": "${workspaceRoot}"
         }

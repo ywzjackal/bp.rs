@@ -40,7 +40,7 @@ pub trait Layer {
         results
     }
 }
-
+#[derive(Serialize, Deserialize)]
 pub struct SigmoidLayer {
     pub neurons: Vec<SigmoidNeuron>,
 }
@@ -52,7 +52,7 @@ impl SigmoidLayer {
 
     pub fn new(neurons_cnt: usize, pre_layer_neurons_cnt: usize) -> SigmoidLayer {
         let mut ns = Vec::with_capacity(neurons_cnt);
-        for i in 0..neurons_cnt {
+        for _ in 0..neurons_cnt {
             let n = SigmoidNeuron::new(pre_layer_neurons_cnt);
             ns.push(n);
         }

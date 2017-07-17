@@ -3,7 +3,7 @@
 
 /// Signal Type.
 /// 信号类型。
-pub type SignalType = f64;
+pub type SignalType = f32;
 /// Algorithm.
 /// 算法。
 pub trait Algorithm: Clone {

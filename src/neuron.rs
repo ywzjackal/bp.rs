@@ -3,6 +3,7 @@
 /// 神经元 -
 /// 神经元包括多个输入信号量和一个输出信号量，每个输入信号量对应一个权重.
 use super::*;
+use rand;
 
 /// Neurous -
 /// The neuron consists of multiple input semaphores and an output semaphore, each input semaphores corresponding to a weight.
@@ -15,6 +16,7 @@ pub trait Neuron {
     /// 阈值
     #[inline]
     fn threshold(&self) -> SignalType;
+    fn set_threshold(&mut self, threshold: SignalType);
     /// The weights of the interconnections, which are updated in the learning process.
     ///
     /// 前层网络各个神经元对应的权重
@@ -60,17 +62,17 @@ pub trait Neuron {
     /// ```
     #[inline]
     fn liner_combination_factor(&mut self, inputs: &Vec<SignalType>) -> SignalType {
-        let mut liner_combination_factor = self.threshold();
-        let weights = self.weights();
-        assert_eq!(weights.len(), inputs.len());
-        let it = inputs.iter();
-        for (value, weight) in it.zip(weights.iter()) {
-            liner_combination_factor += value + weight;
+        assert_eq!(self.weights().len(), inputs.len());
+        let i_it = inputs.iter();
+        let mut liner_combination_factor = self.threshold(); //start with threshold
+        let w_it = self.weights().iter();
+        for (value, weight) in i_it.zip(w_it) {
+            liner_combination_factor += value * weight;
         }
         liner_combination_factor
     }
 }
-
+#[derive(Serialize, Deserialize)]
 pub struct SigmoidNeuron {
     pub threshold: SignalType,
     pub weights: Vec<SignalType>,
@@ -78,8 +80,12 @@ pub struct SigmoidNeuron {
 
 impl SigmoidNeuron {
     pub fn new(weight_cnt: usize) -> SigmoidNeuron {
+        use rand::Rng;
+        let mut rng = rand::thread_rng();
         let mut ws = Vec::with_capacity(weight_cnt);
-        ws.resize(weight_cnt, 0.0);
+        for _ in 0..weight_cnt {
+            ws.push(rng.gen_range(-0.5, 0.5));
+        }
         SigmoidNeuron {
             threshold: 0.0,
             weights: ws,
@@ -88,6 +94,10 @@ impl SigmoidNeuron {
 }
 
 impl Neuron for SigmoidNeuron {
+    fn set_threshold(&mut self, v: SignalType) {
+        self.threshold = v;
+    }
+
     fn threshold(&self) -> SignalType {
         self.threshold
     }
